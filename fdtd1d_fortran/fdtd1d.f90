@@ -56,7 +56,7 @@ program fdtd1d
     tgdelta = sig/omega/epsz
     alpha = omega*sqrt(epsz*muz/2*(sqrt(1+tgdelta**2)-1))
     beta = omega*sqrt(epsz*muz/2*(sqrt(1+tgdelta**2)+1))
-    zc = sqrt(muz/epsz/(1-(0.0, 1.0)*tgdelta))
+    zc = sqrt(muz/epsz/(1.0-(0.0, 1.0)*tgdelta))
 
     xi = x - dx
     
@@ -105,6 +105,7 @@ program fdtd1d
         write(results) real(hy_an(1:ih, n), 4)  
     end do
     close(results)
+    deallocate(ez_res, hy_res, t_res, ez_an, hy_an)
     call execute_command_line('python results/plot.py')
 
 end program fdtd1d
