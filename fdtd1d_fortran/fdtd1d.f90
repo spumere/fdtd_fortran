@@ -1,6 +1,6 @@
 program fdtd1d
     implicit none
-    ! Фундаментальные постоянные и параметры материала
+    ! Фундаментальные постоянные и параметры моделирования
     real, parameter::pi = acos(-1.0)
     real, parameter::cc = 2.99792458e8              !скорость света в свободном пространстве
     real, parameter::muz = 4.0*pi*1.0e-7            !магнитная постоянная
@@ -87,7 +87,7 @@ program fdtd1d
     print *, 'Hy overlap across entire task = ', eta_hy
 
     ! Сохранение массивов в файл и построение графиков в Python
-    open(newunit=results, file='results/fields.bin', &
+    open(newunit=results, file='results/fields1d.bin', &
         form='unformatted', access='stream', status='replace')
     write(results) int(ih, 4), int(nmax, 4)
     write(results) real(x(1:ih), 4)
@@ -106,6 +106,6 @@ program fdtd1d
     end do
     close(results)
     deallocate(ez_res, hy_res, t_res, ez_an, hy_an)
-    call execute_command_line('python results/plot.py')
+    call execute_command_line('python results/plot_1d.py')
 
 end program fdtd1d

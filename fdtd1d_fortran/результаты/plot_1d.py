@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import numpy as np
 
-with open('vectorized_results/fields.bin', 'rb') as f:
+with open('results/fields1d.bin', 'rb') as f:
     ih   = np.fromfile(f, dtype=np.int32, count=1)[0]
     nmax = np.fromfile(f, dtype=np.int32, count=1)[0]
 

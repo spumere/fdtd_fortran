@@ -1,0 +1,10 @@
+nmax = 4900
+ie = 300
+je = 300
+dx = 3.000000e-03 м
+dt = 5.003462e-12 с
+lambda = 5.99584916e-02 м
+t = 24.516964 нс
+mean_distance_ex = 6.06306737e-02 м
+mean_distance_ey = 6.00000000e-02 м
+mean_distance_hz = 6.02006689e-02 м
