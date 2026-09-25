@@ -164,7 +164,7 @@ def plot_benchmark(rows, path):
     axes[1].axhline(1.0, color='gray', linestyle='--',
                     label='S = 1')
     axes[1].set_xlabel('Моделируемый временной промежуток, нс')
-    axes[1].set_ylabel('S = $t_{vector} / t_{scalar}$')
+    axes[1].set_ylabel('S = $t_{scalar} / t_{vector}$')
     axes[1].set_title('Ускорение от векторизации')
     axes[1].legend()
     axes[1].grid(True, alpha=0.4)
@@ -173,8 +173,6 @@ def plot_benchmark(rows, path):
     plt.savefig(path, dpi=150)
     plt.close(fig)
     print(f"график -> {path}")
-
-
 
 os.makedirs(RESULTS_DIR, exist_ok=True)
 

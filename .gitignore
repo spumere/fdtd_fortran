@@ -1,0 +1,12 @@
+# Бинарники результатов
+*.bin
+*.exe
+*.o
+*.mod
+
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/

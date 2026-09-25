@@ -114,7 +114,7 @@ program fdtd2d
 
     dx=3.0e-3
     dt=dx/(2.0*cc)  
-    nmax=500
+    nmax=300
     rmax=1.0e-7
 
     media=2
