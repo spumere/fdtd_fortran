@@ -671,8 +671,6 @@ program fdtd2d
                 dbhzybcr(i,j)*(exbcr(i,j)-exbcr(i,j+1))
             end do
         end do
-
-        
     end do
     call system_clock(count_end, count_rate, count_max)
     elapsed = real(count_end - count_start) / real(count_rate)

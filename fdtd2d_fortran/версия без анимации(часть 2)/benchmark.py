@@ -18,10 +18,11 @@ import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 import struct
 
-SOURCE = 'fdtd2d.f90'
+SOURCE_SCALAR = 'fdtd2d_scalar.f90'
+SOURCE_VECTOR = 'fdtd2d_vectorized.f90'
 RESULTS_DIR = 'results'
 EXE_SCALAR = 'fdtd2d_scalar.exe'
-EXE_VECTOR = 'fdtd2d_vector.exe'
+EXE_VECTOR = 'fdtd2d_vectorized.exe'
 
 NMAX_LIST = np.arange(300, 5100, 200)
 
@@ -35,8 +36,8 @@ dt = dx/(2.0*C) * 1e9
 # Cравниваем только эффект векторизации, всё остальное одинаково.
 # -O2 без векторизации vs -O2 с векторизацией.
 FLAGS_COMMON = ['-O2', '-march=native']
-FLAGS_SCALAR = FLAGS_COMMON + ['-fno-tree-vectorize', '-fno-tree-slp-vectorize']
-FLAGS_VECTOR = FLAGS_COMMON + ['-ftree-vectorize', '-funroll-loops']
+FLAGS_SCALAR = FLAGS_COMMON + ['-fno-tree-vectorize']
+FLAGS_VECTOR = FLAGS_COMMON + ['-ftree-vectorize']
 
 def compile_exe(flags, source, out_exe):
     # Компилирует source с заданными флагами в out_exe.
@@ -180,9 +181,9 @@ print("=" * 70)
 print("Компиляция")
 print("=" * 70)
 print("Скалярный вариант:")
-compile_exe(FLAGS_SCALAR, SOURCE, EXE_SCALAR)
+compile_exe(FLAGS_SCALAR, SOURCE_SCALAR, EXE_SCALAR)
 print("Векторный вариант:")
-compile_exe(FLAGS_VECTOR, SOURCE, EXE_VECTOR)
+compile_exe(FLAGS_VECTOR, SOURCE_VECTOR, EXE_VECTOR)
 
 print()
 print("=" * 70)
