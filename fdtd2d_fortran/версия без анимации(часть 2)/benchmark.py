@@ -24,7 +24,7 @@ RESULTS_DIR = 'results'
 EXE_SCALAR = 'fdtd2d_scalar.exe'
 EXE_VECTOR = 'fdtd2d_vectorized.exe'
 
-NMAX_LIST = np.arange(300, 5100, 200)
+NMAX_LIST = np.arange(400, 5100, 200)
 
 REPEATS = 3
 
@@ -35,9 +35,8 @@ dt = dx/(2.0*C) * 1e9
 # Флаги компиляции
 # Cравниваем только эффект векторизации, всё остальное одинаково.
 # -O2 без векторизации vs -O2 с векторизацией.
-FLAGS_COMMON = ['-O2', '-march=native']
-FLAGS_SCALAR = FLAGS_COMMON + ['-fno-tree-vectorize']
-FLAGS_VECTOR = FLAGS_COMMON + ['-ftree-vectorize']
+FLAGS_SCALAR = ['-O0', '-march=native']
+FLAGS_VECTOR = ['-O3', '-march=native']
 
 def compile_exe(flags, source, out_exe):
     # Компилирует source с заданными флагами в out_exe.
@@ -75,16 +74,16 @@ def extremum_coords(A, prom=0.1, ax="x"):
 
 
 def read_bin(filename):
-    # Читает fields2d.bin с одним кадром.
     with open(filename, 'rb') as f:
-        ie, jb, ib, je, nmax = struct.unpack('5i', f.read(20))
-        dx, dt = struct.unpack('2f', f.read(8))
-        t_final = struct.unpack('f', f.read(4))[0]
-        ex = np.frombuffer(f.read(4 * ie * jb), dtype=np.float32).reshape((ie, jb), order='F')
-        ey = np.frombuffer(f.read(4 * ib * je), dtype=np.float32).reshape((ib, je), order='F')
-        hz = np.frombuffer(f.read(4 * ie * je), dtype=np.float32).reshape((ie, je), order='F')
+        ie, jb, ib, je, nmax = struct.unpack('5q', f.read(40))
+        dx, dt = struct.unpack('2d', f.read(16))
+        t_final = struct.unpack('d', f.read(8))[0]
+        ex = np.frombuffer(f.read(8 * ie * jb), dtype=np.float64).reshape((ie, jb), order='F')
+        ey = np.frombuffer(f.read(8 * ib * je), dtype=np.float64).reshape((ib, je), order='F')
+        hz = np.frombuffer(f.read(8 * ie * je), dtype=np.float64).reshape((ie, je), order='F')
     return dict(ie=ie, jb=jb, ib=ib, je=je, dx=dx, dt=dt,
                 t_final=t_final, ex=ex, ey=ey, hz=hz)
+
 
 
 def save_metadata(data, nmax, path):
