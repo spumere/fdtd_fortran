@@ -34,8 +34,8 @@ dt = dx/(2.0*C) * 1e9
 
 # Флаги компиляции
 # Cравниваем только эффект векторизации, всё остальное одинаково.
-# -O0 без векторизации vs -O3 с векторизацией.
-FLAGS_SCALAR = ['-O0', '-march=native']
+# -O3 без векторизации vs -O3 с векторизацией.
+FLAGS_SCALAR = ['-O3', '-march=native']
 FLAGS_VECTOR = ['-O3', '-march=native']
 
 def compile_exe(flags, source, out_exe):
