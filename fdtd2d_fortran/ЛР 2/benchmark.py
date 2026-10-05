@@ -151,8 +151,8 @@ def plot_benchmark(rows, path):
     fig, axes = plt.subplots(1, 2, figsize=(13, 5))
 
     # Левый: времена
-    axes[0].plot(nmax, t_s, 'o-', label='scalar (-O2 -fno-tree-vectorize)', color='C3')
-    axes[0].plot(nmax, t_v, 's-', label='vector (-O2 -ftree-vectorize)', color='C0')
+    axes[0].plot(nmax, t_s, 'o-', label='scalar (-O0)', color='C3')
+    axes[0].plot(nmax, t_v, 's-', label='vector (-O3)', color='C0')
     axes[0].set_xlabel('Моделируемый временной промежуток, нс')
     axes[0].set_ylabel('Время расчёта, с')
     axes[0].set_title('Время расчёта')
@@ -219,9 +219,12 @@ plot_benchmark(rows, os.path.join(RESULTS_DIR, 'benchmark.png'))
 nmax_last = NMAX_LIST[-1]
 run_once(EXE_VECTOR, nmax_last)
 
-bin_path = os.path.join(RESULTS_DIR, 'fields2d.bin')
+bin_path_scalar = os.path.join(RESULTS_DIR, 'fields2d_scalar.bin')
+bin_path_vector = os.path.join(RESULTS_DIR, 'fields2d_vector.bin')
 
-data = read_bin(bin_path)
-save_metadata(data, nmax_last, os.path.join(RESULTS_DIR, 'metadata.txt'))
-save_final_image(data, os.path.join(RESULTS_DIR, 'fields2d_final.png'))
-
+data_scalar = read_bin(bin_path_scalar)
+data_vector = read_bin(bin_path_vector)
+save_metadata(data_scalar, nmax_last, os.path.join(RESULTS_DIR, 'metadata_scalar.txt'))
+save_metadata(data_vector, nmax_last, os.path.join(RESULTS_DIR, 'metadata_vector.txt'))
+save_final_image(data_scalar, os.path.join(RESULTS_DIR, 'fields2d_final_scalar.png'))
+save_final_image(data_vector, os.path.join(RESULTS_DIR, 'fields2d_final_vector.png'))

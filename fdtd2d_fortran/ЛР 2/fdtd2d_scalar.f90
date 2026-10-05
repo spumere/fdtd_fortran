@@ -137,7 +137,7 @@ program fdtd2d
     hzres = hz
     tres = dt * nt / 1.0e-9
 
-    open(newunit=results, file='results/fields2d.bin', &
+    open(newunit=results, file='results/fields2d_scalar.bin', &
     form='unformatted', access='stream', status='replace')
     write(results) int(ie, 8), int(jb, 8), int(ib, 8), int(je, 8), int(1, 8)
     write(results) real(dx, 8), real(dt, 8)
